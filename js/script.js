@@ -155,38 +155,124 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   if (orderForm) {
-      updateFormatOptions('ukrainian');
-      updatePreview('ukrainian');
+    updateFormatOptions('ukrainian');
+    updatePreview('ukrainian');
 
-      genreSelect.addEventListener('change', event => {
-          updateFormatOptions(event.target.value);
-          updatePreview(event.target.value);
-      });
+    genreSelect.addEventListener('change', event => {
+        updateFormatOptions(event.target.value);
+        updatePreview(event.target.value);
+    });
 
-      orderForm.addEventListener('submit', event => {
-          event.preventDefault();
-          if (!validateForm()) {
-              return;
-          }
+    // МОДИФІКОВАНИЙ ОБРОБНИК SUBMIT ЗГІДНО З ЗАВДАННЯМ
+    orderForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        
+        // 1. Перевірка введених даних перед відправкою
+        if (!validateForm()) {
+            return;
+        }
 
-          orderForm.classList.add('hidden');
-          buildResult();
-          resultSummary.classList.remove('hidden');
-      });
+        // Збір даних з форми
+        const formData = new FormData(orderForm);
+        const extras = formData.getAll('extras');
+        const selectedGenre = genreData[formData.get('genre')];
+        const selectedFormatValue = formData.get('format');
+        const formatLabel = selectedGenre?.formats.find(item => item.value === selectedFormatValue)?.label || selectedFormatValue;
 
-      resultSummary.addEventListener('click', event => {
-          if (event.target.id !== 'reset-button') {
-              return;
-          }
+        // Формування об'єкта для відправки
+        const orderPayload = {
+            fullName: formData.get('fullName'),
+            bookTitle: formData.get('bookTitle'),
+            genre: selectedGenre ? selectedGenre.title : '',
+            format: formatLabel,
+            extras: extras
+        };
 
-          resultSummary.classList.add('hidden');
-          orderForm.reset();
-          updateFormatOptions('ukrainian');
-          updatePreview('ukrainian');
-          clearErrors();
-          orderForm.classList.remove('hidden');
-      });
-  }
+        // Показуємо стан завантаження на кнопці, поки йде запит
+        const submitBtn = orderForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.textContent = 'Відправка...';
+        submitBtn.disabled = true;
+
+        try {
+            // 2. Відправка даних на веб-сервер за допомогою AJAX (fetch, метод POST, формат JSON)
+            const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                },
+                body: JSON.stringify(orderPayload) // Передача даних у форматі JSON
+            });
+
+            if (!response.ok) {
+                throw new Error('Не вдалося з’єднатися із сервером.');
+            }
+
+            const serverResult = await response.json();
+            console.log('Сервер повернув:', serverResult);
+
+            // 3. Після успішної відправки: приховати форму та показати результат
+            orderForm.classList.add('hidden');
+            
+            // Відображення повідомлення про успіх та переданих даних
+            resultSummary.innerHTML = `
+                <div class="success-alert" style="background: #e6fffa; color: #00875a; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-weight: bold; text-align: center;">
+                    🎉 Замовлення успішно відправлено на сервер!
+                </div>
+                <h4>Ваше замовлення (Дані повернуті сервером)</h4>
+                <div class="result-row"><strong>ПІБ:</strong> ${serverResult.fullName}</div>
+                <div class="result-row"><strong>Книга:</strong> ${serverResult.bookTitle}</div>
+                <div class="result-row"><strong>Жанр:</strong> ${serverResult.genre}</div>
+                <div class="result-row"><strong>Формат:</strong> ${serverResult.format}</div>
+                <div class="result-row"><strong>Опції:</strong> ${serverResult.extras.length ? serverResult.extras.join(', ') : 'немає'}</div>
+                <div class="result-row" style="font-size: 0.85em; color: #666; border-top: 1px dashed #ccc; padding-top: 8px; margin-top: 8px;">
+                    <strong>ID запису на сервері:</strong> ${serverResult.id}
+                </div>
+                <button id="reset-button" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Заповнити ще раз</button>
+            `;
+            resultSummary.classList.remove('hidden');
+
+        } catch (error) {
+            // 4. У разі помилки відобразити відповідне повідомлення
+            console.error('Помилка AJAX:', error);
+            
+            // Знаходимо або створюємо блок для загальної помилки форми
+            let formError = document.getElementById('form-ajax-error');
+            if (!formError) {
+                formError = document.createElement('div');
+                formError.id = 'form-ajax-error';
+                formError.style.color = '#de350b';
+                formError.style.marginTop = '10px';
+                formError.style.fontWeight = 'bold';
+                orderForm.appendChild(formError);
+            }
+            formError.textContent = `Помилка при відправці: ${error.message}. Спробуйте пізніше.`;
+        } finally {
+            // Повертаємо кнопку до початкового стану
+            submitBtn.textContent = originalBtnText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // Обробник для кнопки "Заповнити ще раз"
+    resultSummary.addEventListener('click', event => {
+        if (event.target.id !== 'reset-button') {
+            return;
+        }
+
+        resultSummary.classList.add('hidden');
+        orderForm.reset();
+        updateFormatOptions('ukrainian');
+        updatePreview('ukrainian');
+        clearErrors();
+        
+        // Видаляємо повідомлення про помилку сервера, якщо воно було
+        const formError = document.getElementById('form-ajax-error');
+        if (formError) formError.remove();
+
+        orderForm.classList.remove('hidden');
+    });
+}
 
   const priceRange = document.querySelector('.filter-group input[type="range"]');
   const bookCards = document.querySelectorAll('.book-card');
