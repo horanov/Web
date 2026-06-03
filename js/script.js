@@ -1,32 +1,190 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const contactForm = document.querySelector('.contact-form');
-  
-  if (contactForm) {
-      const submitBtn = contactForm.querySelector('.btn-primary');
-      const nameInput = document.getElementById('name');
-      const emailInput = document.getElementById('email');
-      const messageInput = document.getElementById('message');
+  const orderForm = document.getElementById('order-form');
+  const genreSelect = document.getElementById('genre');
+  const formatOptions = document.getElementById('format-options');
+  const previewImage = document.getElementById('genre-preview');
+  const previewTitle = document.getElementById('preview-title');
+  const previewDescription = document.getElementById('preview-description');
+  const resultSummary = document.getElementById('result-summary');
 
-      submitBtn.addEventListener('click', (e) => {
-          e.preventDefault();
+  const genreData = {
+      ukrainian: {
+          title: 'Українська класика',
+          description: 'Ніжна і мудра література з рідного краю.',
+          image: 'images/genre-ukr.svg',
+          formats: [
+              { value: 'paper', label: 'Паперова книга' },
+              { value: 'ebook', label: 'Електронна книга' }
+          ]
+      },
+      foreign: {
+          title: 'Зарубіжна класика',
+          description: 'Всесвітні бестселери, які читають у всьому світі.',
+          image: 'images/genre-foreign.svg',
+          formats: [
+              { value: 'paper', label: 'Паперова книга' },
+              { value: 'audio', label: 'Аудіокнига' }
+          ]
+      },
+      fantasy: {
+          title: 'Фантастика',
+          description: 'Магія, пригоди та нові світи для уяви.',
+          image: 'images/genre-fantasy.svg',
+          formats: [
+              { value: 'ebook', label: 'Електронна книга' },
+              { value: 'audio', label: 'Аудіокнига' }
+          ]
+      },
+      psychology: {
+          title: 'Психологія',
+          description: 'Корисні поради для розвитку особистості та емоційного інтелекту.',
+          image: 'images/genre-psychology.svg',
+          formats: [
+              { value: 'paper', label: 'Паперова книга' },
+              { value: 'ebook', label: 'Електронна книга' }
+          ]
+      }
+  };
 
-          if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) {
-              alert('Будь ласка, заповніть усі обов’язкові поля (Ім’я, Email та Повідомлення)!');
+  const letterPattern = /^[A-Za-zА-Яа-яЁёІіЇїЄєҐґ’'\s]+$/u;
+
+  const errorMap = {
+      fullName: 'Введіть своє ім’я, тільки літери.',
+      bookTitle: 'Введіть назву книги, тільки літери.',
+      genre: 'Оберіть жанр.',
+      format: 'Оберіть формат книги.'
+  };
+
+  const clearErrors = () => {
+      document.querySelectorAll('.error-message').forEach(error => {
+          error.textContent = '';
+      });
+  };
+
+  const updatePreview = (genreKey) => {
+      const selectedGenre = genreData[genreKey] || genreData.ukrainian;
+      previewImage.src = selectedGenre.image;
+      previewImage.alt = selectedGenre.title;
+      previewTitle.textContent = selectedGenre.title;
+      previewDescription.textContent = selectedGenre.description;
+  };
+
+  const updateFormatOptions = (genreKey) => {
+      formatOptions.innerHTML = '';
+      const selectedGenre = genreData[genreKey] || genreData.ukrainian;
+
+      selectedGenre.formats.forEach((format, index) => {
+          const wrapper = document.createElement('label');
+          wrapper.className = 'radio-option';
+
+          const input = document.createElement('input');
+          input.type = 'radio';
+          input.name = 'format';
+          input.value = format.value;
+          input.id = `format-${format.value}`;
+          if (index === 0) {
+              input.checked = true;
+          }
+
+          const span = document.createElement('span');
+          span.textContent = format.label;
+
+          wrapper.appendChild(input);
+          wrapper.appendChild(span);
+          formatOptions.appendChild(wrapper);
+      });
+  };
+
+  const validateField = (name, value) => {
+      if (!value.trim()) {
+          return errorMap[name];
+      }
+
+      if ((name === 'fullName' || name === 'bookTitle') && !letterPattern.test(value.trim())) {
+          return errorMap[name];
+      }
+
+      return '';
+  };
+
+  const validateForm = () => {
+      clearErrors();
+      const formData = new FormData(orderForm);
+      let isValid = true;
+
+      ['fullName', 'bookTitle'].forEach(name => {
+          const value = formData.get(name) || '';
+          const errorText = validateField(name, value);
+          if (errorText) {
+              isValid = false;
+              document.getElementById(`error-${name}`).textContent = errorText;
+          }
+      });
+
+      if (!formData.get('genre')) {
+          isValid = false;
+          document.getElementById('error-genre').textContent = errorMap.genre;
+      }
+
+      if (!formData.get('format')) {
+          isValid = false;
+          document.getElementById('error-format').textContent = errorMap.format;
+      }
+
+      return isValid;
+  };
+
+  const buildResult = () => {
+      const formData = new FormData(orderForm);
+      const extras = formData.getAll('extras');
+      const selectedGenre = genreData[formData.get('genre')];
+      const selectedFormatValue = formData.get('format');
+      const formatLabel = selectedGenre.formats.find(item => item.value === selectedFormatValue)?.label || selectedFormatValue;
+
+      resultSummary.innerHTML = `
+          <h4>Ваше замовлення</h4>
+          <div class="result-row"><strong>ПІБ:</strong> ${formData.get('fullName')}</div>
+          <div class="result-row"><strong>Книга:</strong> ${formData.get('bookTitle')}</div>
+          <div class="result-row"><strong>Жанр:</strong> ${selectedGenre.title}</div>
+          <div class="result-row"><strong>Формат:</strong> ${formatLabel}</div>
+          <div class="result-row"><strong>Опції:</strong> ${extras.length ? extras.join(', ') : 'немає'}</div>
+          <button id="reset-button" class="btn btn-primary">Заповнити ще раз</button>
+      `;
+  };
+
+  if (orderForm) {
+      updateFormatOptions('ukrainian');
+      updatePreview('ukrainian');
+
+      genreSelect.addEventListener('change', event => {
+          updateFormatOptions(event.target.value);
+          updatePreview(event.target.value);
+      });
+
+      orderForm.addEventListener('submit', event => {
+          event.preventDefault();
+          if (!validateForm()) {
               return;
           }
 
-          submitBtn.textContent = 'Надіслано успішно! ✓';
-          submitBtn.classList.remove('btn-primary');
-          submitBtn.classList.add('btn-success');
-          submitBtn.disabled = true;
-          setTimeout(() => {
-              contactForm.querySelectorAll('input, textarea').forEach(input => input.value = '');
-              submitBtn.textContent = 'Надіслати';
-              submitBtn.classList.remove('btn-success');
-              submitBtn.classList.add('btn-primary');
-              submitBtn.disabled = false;
-          }, 3000);
+          orderForm.classList.add('hidden');
+          buildResult();
+          resultSummary.classList.remove('hidden');
+      });
+
+      resultSummary.addEventListener('click', event => {
+          if (event.target.id !== 'reset-button') {
+              return;
+          }
+
+          resultSummary.classList.add('hidden');
+          orderForm.reset();
+          updateFormatOptions('ukrainian');
+          updatePreview('ukrainian');
+          clearErrors();
+          orderForm.classList.remove('hidden');
       });
   }
 

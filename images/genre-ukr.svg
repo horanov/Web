@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+  <rect width="220" height="220" rx="24" fill="#f5f0e8" />
+  <rect x="30" y="30" width="160" height="160" rx="20" fill="#c8862a" opacity=".15" />
+  <path d="M50 60h120v18H50zM50 96h120v12H50zM50 126h120v12H50z" fill="#8b3a2a" opacity=".8" />
+  <rect x="60" y="52" width="18" height="70" rx="6" fill="#f5f0e8" />
+  <rect x="80" y="52" width="18" height="70" rx="6" fill="#f5f0e8" />
+  <rect x="100" y="52" width="18" height="70" rx="6" fill="#f5f0e8" />
+  <text x="110" y="170" text-anchor="middle" fill="#8b3a2a" font-size="36" font-family="Arial">UA</text>
+</svg>

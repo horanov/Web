@@ -87,34 +87,58 @@
 
       <!-- FORM -->
       <div class="contact-form">
-        <h3>Надіслати повідомлення</h3>
+        <h3>Замовлення книги</h3>
 
-        <div class="form-group">
-          <label for="name">Ваше ім'я</label>
-          <input type="text" id="name" placeholder="Іван Петренко" />
+        <form id="order-form" novalidate>
+          <div class="form-group">
+            <label for="fullName">ПІБ</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Іван Петренко" autocomplete="name" />
+            <span class="error-message" id="error-fullName"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="bookTitle">Назва книги</label>
+            <input type="text" id="bookTitle" name="bookTitle" placeholder="Кобзар" />
+            <span class="error-message" id="error-bookTitle"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="genre">Жанр</label>
+            <select id="genre" name="genre">
+              <option value="ukrainian">Українська класика</option>
+              <option value="foreign">Зарубіжна класика</option>
+              <option value="fantasy">Фантастика</option>
+              <option value="psychology">Психологія</option>
+            </select>
+            <span class="error-message" id="error-genre"></span>
+          </div>
+
+          <fieldset class="form-group radio-group">
+            <legend>Формат</legend>
+            <div id="format-options"></div>
+            <span class="error-message" id="error-format"></span>
+          </fieldset>
+
+          <fieldset class="form-group checkbox-group">
+            <legend>Додаткові опції</legend>
+            <label><input type="checkbox" name="extras" value="Подарункова упаковка" /> Подарункова упаковка</label>
+            <label><input type="checkbox" name="extras" value="Швидка доставка" /> Швидка доставка</label>
+            <label><input type="checkbox" name="extras" value="Записка автору" /> Записка автору</label>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;">Замовити</button>
+        </form>
+
+        <div class="preview-panel">
+          <h4>Прев’ю обраного жанру</h4>
+          <img id="genre-preview" src="images/genre-ukr.svg" alt="Жанр прев’ю" />
+          <div class="preview-text">
+            <h5 id="preview-title">Українська класика</h5>
+            <p id="preview-description">Ніжна і мудра література з рідного краю.</p>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="ivan@example.com" />
-        </div>
-
-        <div class="form-group">
-          <label for="subject">Тема</label>
-          <select id="subject">
-            <option>Замовлення книги</option>
-            <option>Наявність у магазині</option>
-            <option>Доставка</option>
-            <option>Інше</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="message">Повідомлення</label>
-          <textarea id="message" placeholder="Напишіть ваше запитання або побажання…"></textarea>
-        </div>
-
-        <button class="btn btn-primary" style="width:100%;">Надіслати</button>
+        <div id="result-summary" class="result-summary hidden"></div>
       </div>
 
     </div>
