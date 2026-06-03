@@ -149,6 +149,64 @@
       <p>вул. Проспект Свободи, 14 · Львів</p>
     </div>
 
+    <!-- AJAX BOOKS FILTER -->
+    <div class="ajax-section">
+      <h2>Пошук книг через AJAX</h2>
+      <p class="section-sub">Фільтруйте та пошукуйте книги без перезавантаження сторінки</p>
+
+      <div class="ajax-container">
+        <div class="ajax-filters">
+          <h3>Фільтри</h3>
+
+          <div class="filter-group">
+            <label for="search-input">Пошук за назвою</label>
+            <input 
+              type="text" 
+              id="search-input" 
+              placeholder="Введіть назву книги..." 
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="filter-group">
+            <label for="ajax-genre-filter">Жанр</label>
+            <select id="ajax-genre-filter">
+              <option value="">Всі жанри</option>
+              <option value="ukrainian">Українська класика</option>
+              <option value="foreign">Зарубіжна класика</option>
+              <option value="fantasy">Фантастика</option>
+              <option value="psychology">Психологія</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="min-price">Мінімальна ціна</label>
+            <input type="number" id="min-price" placeholder="0" min="0" />
+          </div>
+
+          <div class="filter-group">
+            <label for="max-price">Максимальна ціна</label>
+            <input type="number" id="max-price" placeholder="1000" min="0" />
+          </div>
+
+          <button id="apply-filters" class="btn-filter">Застосувати</button>
+          <button id="reset-filters" class="btn-reset">Скинути</button>
+        </div>
+
+        <div class="ajax-results">
+          <div class="results-header">
+            <h3>Результати пошуку</h3>
+            <div class="loading-spinner" id="loading-spinner"></div>
+          </div>
+
+          <div id="error-message" class="error-message hidden"></div>
+          <div id="empty-message" class="empty-message hidden"></div>
+
+          <div id="results-grid" class="results-grid"></div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- FOOTER -->
