@@ -1,0 +1,54 @@
+/* Extra hero polish for homepage */
+.hero {
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animate hero content in */
+.hero-eyebrow,
+.hero h1,
+.hero p,
+.hero-cta {
+  animation: fadeUp .6s ease both;
+}
+
+.hero-eyebrow {
+  animation-delay: .05s;
+}
+
+.hero h1 {
+  animation-delay: .18s;
+}
+
+.hero p {
+  animation-delay: .32s;
+}
+
+.hero-cta {
+  animation-delay: .46s;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Book covers get subtle gradient overlay on hover */
+.book-cover {
+  position: relative;
+  transition: filter .2s;
+}
+
+.book-card:hover .book-cover {
+  filter: brightness(1.06);
+}

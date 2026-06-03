@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Каталог — Літера</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/catalog.css" />
+</head>
+
+<body>
+
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span>📚</span> Літера
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Головна</a></li>
+        <li><a href="catalog.html" class="active">Каталог</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-banner">
+    <h1>Каталог книг</h1>
+    <p>Понад 3 000 найменувань · Оновлюється щотижня</p>
+  </div>
+
+  <main class="page-content">
+    <div class="catalog-layout">
+
+      <aside class="sidebar">
+        <h3>Фільтри</h3>
+
+        <div class="filter-group">
+          <label>Жанр</label>
+          <div class="checkboxes">
+            <label><input type="checkbox" checked /> Українська класика</label>
+            <label><input type="checkbox" checked /> Зарубіжна класика</label>
+            <label><input type="checkbox" /> Фантастика</label>
+            <label><input type="checkbox" /> Детектив</label>
+            <label><input type="checkbox" /> Бізнес і саморозвиток</label>
+            <label><input type="checkbox" /> Дитяча література</label>
+            <label><input type="checkbox" /> Психологія</label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label>Мова</label>
+          <div class="checkboxes">
+            <label><input type="checkbox" checked /> Українська</label>
+            <label><input type="checkbox" /> Англійська</label>
+            <label><input type="checkbox" /> Польська</label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label>Ціна до</label>
+          <input type="range" min="0" max="1000" value="600" />
+          <p style="font-size:.82rem; color:#7a6e5f; margin-top:6px;">до ₴ 600</p>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;">Застосувати</button>
+      </aside>
+
+      <section>
+        <div class="catalog-header">
+          <p class="catalog-count">Знайдено <strong>24</strong> книги</p>
+          <select class="sort-select">
+            <option>Сортування: за новизною</option>
+            <option>Ціна: від меншої</option>
+            <option>Ціна: від більшої</option>
+            <option>Назва: А–Я</option>
+          </select>
+        </div>
+
+        <div class="books-grid">
+
+          <div class="book-card">
+            <div class="book-cover">📖</div>
+            <div class="book-info">
+              <span class="book-badge">Новинка</span>
+              <p class="book-title">Кобзар</p>
+              <p class="book-author">Тарас Шевченко</p>
+              <p class="book-price">₴ 280</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">🌿</div>
+            <div class="book-info">
+              <span class="book-badge">Бестселер</span>
+              <p class="book-title">Лісова пісня</p>
+              <p class="book-author">Леся Українка</p>
+              <p class="book-price">₴ 240</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">🌙</div>
+            <div class="book-info">
+              <p class="book-title">Місто</p>
+              <p class="book-author">Валер'ян Підмогильний</p>
+              <p class="book-price">₴ 320</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">⚔️</div>
+            <div class="book-info">
+              <span class="book-badge">Топ</span>
+              <p class="book-title">Тіні забутих предків</p>
+              <p class="book-author">Михайло Коцюбинський</p>
+              <p class="book-price">₴ 195</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">🔥</div>
+            <div class="book-info">
+              <p class="book-title">Я романтика</p>
+              <p class="book-author">Микола Хвильовий</p>
+              <p class="book-price">₴ 210</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">🌊</div>
+            <div class="book-info">
+              <span class="book-badge">Новинка</span>
+              <p class="book-title">Маруся Чурай</p>
+              <p class="book-author">Ліна Костенко</p>
+              <p class="book-price">₴ 350</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">🏔️</div>
+            <div class="book-info">
+              <p class="book-title">Захар Беркут</p>
+              <p class="book-author">Іван Франко</p>
+              <p class="book-price">₴ 175</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">🌻</div>
+            <div class="book-info">
+              <p class="book-title">Чорна рада</p>
+              <p class="book-author">Пантелеймон Куліш</p>
+              <p class="book-price">₴ 265</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">🦅</div>
+            <div class="book-info">
+              <span class="book-badge">Топ</span>
+              <p class="book-title">Хіба ревуть воли</p>
+              <p class="book-author">Панас Мирний</p>
+              <p class="book-price">₴ 230</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">🌺</div>
+            <div class="book-info">
+              <p class="book-title">Інститутка</p>
+              <p class="book-author">Марко Вовчок</p>
+              <p class="book-price">₴ 155</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">💫</div>
+            <div class="book-info">
+              <p class="book-title">Мойсей</p>
+              <p class="book-author">Іван Франко</p>
+              <p class="book-price">₴ 190</p>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="book-cover">🐺</div>
+            <div class="book-info">
+              <span class="book-badge">Новинка</span>
+              <p class="book-title">Вовчиця</p>
+              <p class="book-author">Оксана Забужко</p>
+              <p class="book-price">₴ 420</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pagination">
+          <a href="#" class="page-btn active">1</a>
+          <a href="#" class="page-btn">2</a>
+          <a href="#" class="page-btn">3</a>
+          <span class="page-ellipsis">…</span>
+          <a href="#" class="page-btn">8</a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2024 Літера — Книжковий магазин · Львів · <a href="contact.html">Зв'язатися з нами</a></p>
+  </footer>
+
+</body>
+
+</html>

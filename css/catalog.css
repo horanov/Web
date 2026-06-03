@@ -1,0 +1,43 @@
+/* Pagination */
+.pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: .875rem;
+  background: #fff;
+  color: var(--ink);
+  border: 1.5px solid #d4c9b4;
+  transition: background .15s, color .15s;
+}
+
+.page-btn:hover,
+.page-btn.active {
+  background: var(--amber);
+  color: var(--ink);
+  border-color: var(--amber);
+}
+
+.page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  color: #7a6e5f;
+}
+
+/* Book cards in catalog — slightly smaller gap */
+.catalog-layout .books-grid {
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}

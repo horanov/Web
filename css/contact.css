@@ -1,0 +1,32 @@
+/* Contact page extras */
+.contact-info a {
+  color: var(--amber);
+  font-weight: 700;
+  transition: opacity .15s;
+}
+
+.contact-info a:hover {
+  opacity: .75;
+}
+
+.social-link {
+  color: var(--amber) !important;
+}
+
+/* Subtle card lift on form focus-within */
+.contact-form:focus-within {
+  box-shadow: 0 6px 32px rgba(200, 134, 42, .18);
+}
+
+/* Success state for button (toggled via JS) */
+.btn-success {
+  background: #4a9e6a !important;
+  color: #fff !important;
+}
+
+/* Responsive tweak */
+@media (max-width: 480px) {
+  .contact-form {
+    padding: 24px 18px;
+  }
+}
